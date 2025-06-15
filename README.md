@@ -66,6 +66,44 @@ Language learning tools
 
 
 # program of voice recognition
+    pip install SpeechRecognition
+    pip install pyaudio
+        import speech_recognition as sr
+
+    def speech_to_text():
+        recognizer = sr.Recognizer()
+        with sr.Microphone() as source:
+            print("Speak now...")
+            try:
+                audio = recognizer.listen(source, timeout=5) # Listen for 5 seconds
+            except sr.WaitTimeoutError:
+                print("No speech detected within the timeout period.")
+                return None
+
+        try:
+            text = recognizer.recognize_google(audio)
+            print("You said: " + text)
+            return text
+        except sr.UnknownValueError:
+            print("Google Speech Recognition could not understand audio")
+            return None
+        except sr.RequestError as e:
+            print("Could not request results from Google Speech Recognition service; {0}".format(e))
+            return None
+
+    if __name__ == "__main__":
+        speech_to_text()Explanation:
+The code imports the speech_recognition library as sr.
+A Recognizer object is created.
+The sr.Microphone() context manager is used to access the microphone.
+The recognizer.listen(source) method captures audio input and stores it in the audio variable.
+recognizer.recognize_google(audio) uses the Google Speech Recognition API to convert the audio to text.
+The recognized text is printed to the console.
+Error handling is included for cases where the audio cannot be understood or the API is unavailable.
+How to Run:
+Save the code to a file, for example, speech_to_text.py. 
+Run the script from the terminal using: python speech_to_text.py.
+Speak into your microphone when prompted.
 
 
 
